@@ -1,31 +1,22 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef} from 'react';
 import emailjs from '@emailjs/browser';
 import { MdOutlineEmail } from 'react-icons/md';
 import './contact.css';
+import {RiMessengerLine} from 'react-icons/ri' ;            
+import {BsWhatsapp} from 'react-icons/bs'             
+
 
 const Contact = () => {
-  const [message, setMessage] = useState(false);
-  const formRef = useRef();
-  const handleSubmit = (e) => {
+  const form = useRef();
+  const sendEmail = (e) => {
     e.preventDefault();
-    setMessage(true);
-    emailjs
-      .sendForm(
-        'service_k2qawqh',
-        'template_c6rkpn6',
-        formRef.current,
-        'X7K7ebhIeOy3YwHki'
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
 
-    e.target.reset();
+    emailjs.sendForm('service_rdw8kto', 'template_hppidai', form.current, 'Sbrsmye6r7vUlZpK3')
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
   };
   return (
     <section id="contact">
@@ -41,33 +32,32 @@ const Contact = () => {
             <MdOutlineEmail className="contact__option-icon" />
             <h4>Email</h4>
             <h5>kehbuma185@gmail.com</h5>
-            <a href="mailto:kehbuma185@gmail.com">Send a message</a>
+            <a href="mailto:kehbuma185@gmail.com" target="_blank">Send a message</a>
+          </article>
+          <article className="contact__option">
+            <RiMessengerLine className="contact__option-icon"/>
+            <h4>Messenger</h4>
+            <h5>Charlie Charles</h5>
+            <a href="https://web.facebook.com/profile.php?id=100076526053229" target="_blank">Send a message</a>
+          </article>
+          <article className="contact__option">
+            <BsWhatsapp className="contact__option-icon"/>
+            <h4>WhatsApp</h4>
+            <h5>237654546322</h5>
+            <a href="https://api.whatsapp.com/send?phone=+237654546322" target="_blank">Send a message</a>
           </article>
         </div>
-        <form ref={formRef} onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Your Full Name"
-            name="user_name"
-            required
-          />
-          <input
-            type="text"
-            placeholder="Your Email"
-            name="user_email"
-            required
-          />
-          <textarea
-            placeholder="Your message"
-            rows="7"
-            name="message"
-            required
-          ></textarea>
+
+        {/*END OF CONTACT OPTIONS*/}
+        <form ref={form} onSubmit={sendEmail}>
+        <input type="text" name="name" placeholder='Your Full Name' required/>
+      <input type="email" name="email" placeholder='Your Email' required/>
+       <textarea  name="message"  rows="7" placeholder="Your message" id ="" required></textarea>
           <button type="submit" className="btn btn-primary">
             Send Message
           </button>
-          {message && <span>Thanks, I'll reply ASAP :)</span>}
         </form>
+       
       </div>
     </section>
   );
